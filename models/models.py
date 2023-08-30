@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+# Aqui empece
 
 # class custom_modulo(models.Model):
 #     _name = 'custom_modulo.custom_modulo'
