@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
+from odoo import models, fields, api
+# Aqui empece
 import requests
 import xml.etree.ElementTree as ET
 import datetime
 
-from odoo import models, fields, api
-# Aqui empece
-
-class TrmData(models.model):
+class L10nCoTrm(models.model):
     
-              _name = 'TrmData'
-              _description = 'Tasa representativa del mercado en Colombia'
+ _name = 'l10n_co_trm.trm'              
+ _description = 'Tasa representativa del mercado en Colombia'
 
-              date = fields.Date(String='Date')
-              value = fields.Float(string='Value')
-
-
-# trm = fields.Float(string='TRM' , required=True)
+trm = fields.Float(string='TRM' , required=True)
 
 @api.multi
 def pyTRM(date_trm=""):
@@ -47,9 +42,9 @@ def pyTRM(date_trm=""):
         json_data[variable] =  eval(variable)  
     return json_data  
 
-# def trm_actual() 
-fecha = datetime.date.today()
-trm_data = pyTRM(fecha) 
-trm_value = trm_data.get("value") 
-
-print (trm_value)
+@api.multi
+#miro si la dejo o borro
+def trm_actual(self):
+    fecha = datetime.date.today()
+    trm_value = self.pyTRM(str(fecha))
+    self.trm = trm_value

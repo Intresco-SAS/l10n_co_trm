@@ -1,30 +1,18 @@
 <odoo>
   <data>
-     <record model="ir.ui.view" id="custom_modulo.list">
-      <field name="name">trm.button.view</field>
-      <field name="model">trm.data</field>
+     <record model="ir.ui.view" id="view_trm_form">
+      <field name="name">l10n_co_trm.form</field>
+      <field name="model">l10n_co_trm.trm</field>
       <field name="arch" type="xml">
         <form>
           <header>
-            <button name ="mostrartrm" string ="Mostrar TRM" type="object" class="oe_highlight"/>
+            <button name ="trm_actual" string ="Mostrar TRM" type="object" class="oe_highlight"/>
           </header>
           <sheet>
-            <group>
-              <field name="date"/>
-              <field name="value"/>
-            </group>
-            <group>
-              <label>Fecha de la TRM</label>
-              <div>
-                <fiel name="date" widget="date"/>
-              </div>
-            </group>
-            <group>
-              <label>Valor de la TRM</label>
-              <div>
-                <field name="value" widget="float"/>
-              </div>
-            </group>
+            <div>
+              <label for= "trm" string="TRM actual:"/>
+              <fiel name="date" widget="date"/>    
+            </div>
           </sheet> 
         </form>
      </field>
