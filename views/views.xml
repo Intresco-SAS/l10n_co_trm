@@ -1,19 +1,15 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="custom_modulo.list">
+     <record model="ir.ui.view" id="custom_modulo.list">
       <field name="name">custom_modulo list</field>
       <field name="model">custom_modulo.custom_modulo</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
+          <field name="date"/>
           <field name="value"/>
-          <field name="value2"/>
         </tree>
       </field>
     </record>
-    -->
 
     <!-- actions opening views on models -->
     <!--
