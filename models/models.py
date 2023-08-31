@@ -5,20 +5,17 @@ import requests
 import xml.etree.ElementTree as ET
 import datetime
 
-class L10nCoTrm(models.model):
+#buscar error aca 
+
+class l10n_co_trm(models.Model):
     
- _name = 'l10n_co_trm.trm'              
- _description = 'Tasa representativa del mercado en Colombia'
+    _name = 'l10n_co_trm'              
+    _description = 'Tasa representativa del mercado en Colombia'
 
 trm = fields.Float(string='TRM' , required=True)
 
-@api.multi
+@api.model
 def pyTRM(date_trm=""):
-    """
-    Retorna en JSON el valor de la TRM del dia actual\n
-    Puede especificar una fecha\n
-    pyTRM("2021-06-1") -> retorna el valor para el 1 de junio del 2021 
-    """
     url = "https://www.superfinanciera.gov.co/SuperfinancieraWebServiceTRM/TCRMServicesWebService/TCRMServicesWebService?wsdl"
     xml = f'''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
             xmlns:act="http://action.trm.services.generic.action.superfinanciera.nexura.sc.com.co/">
@@ -42,7 +39,7 @@ def pyTRM(date_trm=""):
         json_data[variable] =  eval(variable)  
     return json_data  
 
-@api.multi
+@api.model
 #miro si la dejo o borro
 def trm_actual(self):
     fecha = datetime.date.today()

@@ -1,6 +1,15 @@
 <odoo>
   <data>
-     <record model="ir.ui.view" id="view_trm_form">
+    <menuitem id="menu_l10n_co_trm" name="TRM" action="action_l10n_co_trm" sequence="10"/>
+    <record id="action_l10n_co_trm" model="ir.actions.act_window">
+      <field name="name">TRM</field>
+      <field name="res_model">l10n_co_trm</field>
+      <field name="view_model">form</field>
+      <field name="view_id" ref="view_l10n_co_trm_form"/>
+      <field name="help" type="html"/>
+          <p class="oe_view_nocontent_create">Clic en el botón para actualizar la TRM</p>
+    </record>
+    <record model="ir.ui.view" id="view_l10n_co_trm_form">
       <field name="name">l10n_co_trm.form</field>
       <field name="model">l10n_co_trm.trm</field>
       <field name="arch" type="xml">
