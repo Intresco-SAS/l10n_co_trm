@@ -1,30 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <menuitem id="menu_l10n_co_trm" name="TRM" action="action_l10n_co_trm" sequence="10"/>
-    <record id="action_l10n_co_trm" model="ir.actions.act_window">
-      <field name="name">TRM</field>
-      <field name="res_model">l10n_co_trm</field>
-      <field name="view_model">form</field>
-      <field name="view_id" ref="view_l10n_co_trm_form"/>
-      <field name="help" type="html"/>
-          <p class="oe_view_nocontent_create">Clic en el botón para actualizar la TRM</p>
+    <record id="action_trm_sequence" model="ir.actions.act_window">
+        <field name="name">TRM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">l10n_co_trm</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                TRM
+            </p>
+            <p>
+                Click 'Nuevo' para añadir nuevos elementos
+            </p>
+        </field>
     </record>
-    <record model="ir.ui.view" id="view_l10n_co_trm_form">
-      <field name="name">l10n_co_trm.form</field>
-      <field name="model">l10n_co_trm.trm</field>
-      <field name="arch" type="xml">
-        <form>
-          <header>
-            <button name ="trm_actual" string ="Mostrar TRM" type="object" class="oe_highlight"/>
-          </header>
-          <sheet>
-            <div>
-              <label for= "trm" string="TRM actual:"/>
-              <fiel name="date" widget="date"/>    
-            </div>
-          </sheet> 
-        </form>
-     </field>
-   </record>     
-  </data>
+    
+    <menuitem id="menu_trm" 
+            name="consulta trm" 
+            sequence="35" 
+            parent="account.menu_finance"
+            action="action_trm_sequence"/> 
+            
+    <record id="l10n_co_trm_view_form" model="ir.ui.view">
+        <field name="name">l10n_co_trm.view.form</field>
+        <field name="model">l10n_co_trm</field>
+        <field name="arch" type="xml">
+            <form string="Consulta TRM">
+                <button name="pyTRM" string="Consultar TRM" type="object"></button>
+                <sheet>
+                    <group>
+                        <field name="trm"></field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>        
 </odoo>

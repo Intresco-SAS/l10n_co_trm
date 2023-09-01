@@ -30,6 +30,7 @@
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        'data/l10n_co_trm_menu.xml',          
+       # 'demo/demo.xml',
     ],
 }
