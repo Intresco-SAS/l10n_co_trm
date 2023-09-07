@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_currency_rate_tree" model="ir.ui.view">
+            <field name="name">currency.rate.tree</field>
+            <field name="model">res.currency.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Currency Rates" editable="bottom">
+                    <field name="name"/>
+                    <field name="rate" digits="[12,12]"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
