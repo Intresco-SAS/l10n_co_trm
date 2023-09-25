@@ -68,17 +68,15 @@ class TRMConfiguration(models.TransientModel):
         if self.interval == 'daily':
             cron_daily.active = self.update_trm
             cron_weekly.active = False
-
-            print("funciona" * 100)
+      
         elif self.interval == 'monthly':
             cron_monthly.active = self.update_trm
             cron_daily.active = False
             cron_weekly.active = False
-            print("funciona2" * 100)
-
+        
         elif self.interval == 'weekly':
             cron_weekly.active = self.update_trm
             cron_daily.active = False
             cron_monthly.active = False
-            print("funciona3" * 100)
+            
         
