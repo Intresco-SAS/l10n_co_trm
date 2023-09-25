@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_currency_rate_tree" model="ir.ui.view">
-            <field name="name">currency.rate.tree</field>
-            <field name="model">res.currency.rate</field>
+        <record id="trmc_inherit_res_currency" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.trmc</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
             <field name="arch" type="xml">
-                <tree string="Currency Rates" editable="bottom">
-                    <field name="name"/>
-                    <field name="rate" digits="[12,12]"/>
-                    <field name="company_id"/>
-                </tree>
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <div>
+                        <h2>Configuración de la Actualización de TRM</h2>
+                        <div>
+                            <label string="Siguiente ejecución" for="next_date"/>
+                            <field name="next_date"/>
+                        </div>
+                        <div>
+                            <label string="Servicio" for="service"/>
+                            <field name="service"/>
+                        </div>
+                        <div>
+                            <label string="Intervalo" for="interval"/>
+                            <field name="interval"/>
+                        </div>
+                    </div>
+                </xpath>
             </field>
         </record>
     </data>
