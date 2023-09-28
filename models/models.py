@@ -56,30 +56,32 @@ class TRMConfiguration(models.TransientModel):
         ('weekly', 'Semanalmente'),
         ('monthly', 'Mensualmente')
     ], string='Intervalo de actualización')
-    next_date = fields.Datetime(string='Manualmente', default=fields.Datetime.now)
+    next_date = fields.Datetime(string='Manualmente', default=datetime.datetime.now().replace(hour=13, minute=0, second=0, microsecond=0))
 
-    @api.onchange('interval')
+    @api.onchange('interval', 'next_date')
     def trm_configuration(self):
         cron = self.env.ref('l10n_co_trm.l10n_co_trm_cron')
 
         if self.interval:
-            
-            if self.interval == 'daily':
+               
+            if self.interval == 'manual':
+                cron.nextcall = self.next_date
+                
+            elif self.interval == 'daily':
                 cron.interval_type = 'days'
                 cron.interval_number = 1
-                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+                cron.nextcall = self.next_date
+
             elif self.interval == 'weekly':
                 cron.interval_type = 'weeks'
                 cron.interval_number = 1
-                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+                cron.nextcall = self.next_date
+
             elif self.interval == 'monthly':
                 cron.interval_type = 'months'
                 cron.interval_number = 1
-                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
-            elif self.interval == 'manual':
-                self.next_date = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
                 cron.nextcall = self.next_date
-
+         
             cron.active = True
         else:
             cron.active = False
