@@ -7,21 +7,31 @@
             <field name="inherit_id" ref="account.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='currency_id']" position="after">
-                    <div>
-                        <h2>Configuración de la Actualización de TRM</h2>
                         <div>
-                            <label string="Siguiente ejecución" for="next_date"/>
-                            <field name="next_date"/>
+                           <h3>Actualización TRM</h3> 
                         </div>
                         <div>
-                            <label string="Servicio" for="service"/>
-                            <field name="service"/>
+                            <div>
+                                <label string="Servicio" for="service"/>
+                                <field name="service"/>
+
+                            </div>
                         </div>
                         <div>
-                            <label string="Intervalo" for="interval"/>
-                            <field name="interval"/>
+                            <div>
+                                <label string="Intervalo" for="interval"/>
+                                <field name="interval" widget="selection"/>
+                                
+                            </div>
                         </div>
-                    </div>
+                        <div>
+                        <div>
+                            <field name="next_date" attrs="{'invisible': [('interval', '!=', 'manual')]}"/>
+                            <field name="next_date" attrs="{'invisible': [('interval', '!=', 'daily')]}"/>
+                            <field name="next_date" attrs="{'invisible': [('interval', '!=', 'monthly')]}"/>
+                            <field name="next_date" attrs="{'invisible': [('interval', '!=', 'weekly')]}"/>
+                     </div>
+                    </div>       
                 </xpath>
             </field>
         </record>

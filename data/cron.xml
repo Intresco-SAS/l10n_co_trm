@@ -10,26 +10,5 @@
             <field name="state">code</field>
             <field name="code">model.pyTRM()</field>
         </record>
-
-        <record id="l10n_co_trm_cron_weekly" model="ir.cron">
-            <field name="name">Actualizar TRM Semanal</field>
-            <field name="model_id" ref="base.model_res_currency_rate"/>
-            <field name="interval_number">1</field>
-            <field name="interval_type">weeks</field>
-            <field name="numbercall">-1</field>
-            <field name="state">code</field>
-            <field name="code">model.pyTRM()</field>
-        </record>
-
-        <record id="l10n_co_trm_cron_weekly_monthly" model="ir.cron">
-            <field name="name">Actualizar TRM Mensual</field>
-            <field name="model_id" ref="base.model_res_currency_rate"/>
-            <field name="interval_number">1</field>
-            <field name="interval_type">months</field>
-            <field name="numbercall">-1</field>
-            <field name="state">code</field>
-            <field name="code">model.pyTRM()</field>
-        </record>
-
     </data>
 </odoo>

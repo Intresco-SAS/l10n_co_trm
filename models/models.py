@@ -46,37 +46,40 @@ class AccountTRM(models.Model):
             self.env['res.currency.rate'].create({'name': date_trm, 'rate': float(value), 'currency_id': 8})
 
 class TRMConfiguration(models.TransientModel):
-    
     _inherit = 'res.config.settings'
     _description = 'Configuración de la Actualización de TRM'
 
-    update_trm = fields.Boolean(string="Actualización automática")
     service = fields.Char(string='Fuente de TRM', default='Superfinanciera de Colombia', readonly=True)
     interval = fields.Selection([
+        ('manual', 'Manualmente'),
         ('daily', 'Diariamente'),
         ('weekly', 'Semanalmente'),
         ('monthly', 'Mensualmente')
     ], string='Intervalo de actualización')
-    next_date = fields.Date(string='Siguiente ejecución', default=fields.Date.today)
+    next_date = fields.Datetime(string='Manualmente', default=fields.Datetime.now)
 
-    def action(self):
-        super(TRMConfiguration, self).action()
-        cron_daily = self.env.ref('trm.l10n_co_trm_cron_daily')
-        cron_weekly = self.env.ref('trm.l10n_co_trm_cron_weekly')
-        cron_monthly = self.env.ref('trm.l10n_co_trm_cron_monthly')
+    @api.onchange('interval')
+    def trm_configuration(self):
+        cron = self.env.ref('l10n_co_trm.l10n_co_trm_cron')
 
-        if self.interval == 'daily':
-            cron_daily.active = self.update_trm
-            cron_weekly.active = False
-      
-        elif self.interval == 'monthly':
-            cron_monthly.active = self.update_trm
-            cron_daily.active = False
-            cron_weekly.active = False
-        
-        elif self.interval == 'weekly':
-            cron_weekly.active = self.update_trm
-            cron_daily.active = False
-            cron_monthly.active = False
+        if self.interval:
             
-        
+            if self.interval == 'daily':
+                cron.interval_type = 'days'
+                cron.interval_number = 1
+                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+            elif self.interval == 'weekly':
+                cron.interval_type = 'weeks'
+                cron.interval_number = 1
+                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+            elif self.interval == 'monthly':
+                cron.interval_type = 'months'
+                cron.interval_number = 1
+                cron.nextcall = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+            elif self.interval == 'manual':
+                self.next_date = self.next_date.replace(hour=13, minute=0, second=0, microsecond=0)
+                cron.nextcall = self.next_date
+
+            cron.active = True
+        else:
+            cron.active = False
