@@ -8,7 +8,13 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='currency_id']" position="after">
                         <div>
-                           <h3>Actualización TRM</h3> 
+                           <h3>Tasas de Cambio Automáticas</h3> 
+                        </div>
+                        <div>
+                            <label for="update_trm" class="o_form_label">Actualizar Manualmente</label>
+                            <div class="o_form_input">
+                                <field name="update_trm" class="o_checkbox"/>
+                            </div>
                         </div>
                         <div>
                             <div>

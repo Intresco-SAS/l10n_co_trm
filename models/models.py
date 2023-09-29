@@ -12,7 +12,6 @@ class AccountTRM(models.Model):
     _description = 'Tasa representativa del mercado en Colombia'
 
     def pyTRM(self):
-        date_trm = datetime.date.today()
 
         url = "https://www.superfinanciera.gov.co/SuperfinancieraWebServiceTRM/TCRMServicesWebService/TCRMServicesWebService?wsdl"
         date_trm = datetime.date.today()
@@ -44,11 +43,15 @@ class AccountTRM(models.Model):
             existing_rate.write({'rate': float(value)})
             existing_rate.unlink()
             self.env['res.currency.rate'].create({'name': date_trm, 'rate': float(value), 'currency_id': 8})
+        else:
+            self.env['res.currency.rate'].create({'name': date_trm, 'rate': float(value), 'currency_id': 8})    
 
+   
 class TRMConfiguration(models.TransientModel):
     _inherit = 'res.config.settings'
     _description = 'Configuración de la Actualización de TRM'
 
+    update_trm =  fields.Boolean(string='Actualizar Manualmente')
     service = fields.Char(string='Fuente de TRM', default='Superfinanciera de Colombia', readonly=True)
     interval = fields.Selection([
         ('manual', 'Manualmente'),
@@ -56,32 +59,34 @@ class TRMConfiguration(models.TransientModel):
         ('weekly', 'Semanalmente'),
         ('monthly', 'Mensualmente')
     ], string='Intervalo de actualización')
-    next_date = fields.Datetime(string='Manualmente', default=datetime.datetime.now().replace(hour=13, minute=0, second=0, microsecond=0))
+    next_date = fields.Datetime(string='Manualmente', default=datetime.datetime.now().replace(hour=1, minute=0, second=0, microsecond=0))
 
     @api.onchange('interval', 'next_date')
     def trm_configuration(self):
         cron = self.env.ref('l10n_co_trm.l10n_co_trm_cron')
-
-        if self.interval:
-               
-            if self.interval == 'manual':
-                cron.nextcall = self.next_date
                 
+        if self.update_trm:
+            if self.interval == 'manual':
+                cron.interval_number = 1
+                cron.nextcall = self.next_date
+                cron.numbercall = 1
+
             elif self.interval == 'daily':
                 cron.interval_type = 'days'
                 cron.interval_number = 1
                 cron.nextcall = self.next_date
+                cron.numbercall = 1
 
             elif self.interval == 'weekly':
                 cron.interval_type = 'weeks'
                 cron.interval_number = 1
                 cron.nextcall = self.next_date
+                cron.numbercall = -1
 
             elif self.interval == 'monthly':
                 cron.interval_type = 'months'
                 cron.interval_number = 1
                 cron.nextcall = self.next_date
-         
-            cron.active = True
+                cron.numbercall = -1  
         else:
-            cron.active = False
+            cron.active = True
