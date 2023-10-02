@@ -75,7 +75,7 @@ class TRMConfiguration(models.TransientModel):
                 cron.interval_type = 'days'
                 cron.interval_number = 1
                 cron.nextcall = self.next_date
-                cron.numbercall = 1
+                cron.numbercall = -1
 
             elif self.interval == 'weekly':
                 cron.interval_type = 'weeks'
