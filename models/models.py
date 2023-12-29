@@ -51,15 +51,16 @@ class TRMConfiguration(models.TransientModel):
     _inherit = 'res.config.settings'
     _description = 'Configuración de la Actualización de TRM'
 
-    update_trm =  fields.Boolean(string='Actualizar Manualmente')
+    update_trm =  fields.Boolean(string='Tasas de cambio Automáticas')
     service = fields.Char(string='Fuente de TRM', default='Superfinanciera de Colombia', readonly=True)
     interval = fields.Selection([
         ('manual', 'Manualmente'),
         ('daily', 'Diariamente'),
         ('weekly', 'Semanalmente'),
         ('monthly', 'Mensualmente')
-    ], string='Intervalo de actualización')
-    next_date = fields.Datetime(string='Manualmente', default=datetime.datetime.now().replace(hour=1, minute=0, second=0, microsecond=0))
+    ], string='Intervalo de actualización',
+        default='daily')
+    next_date = fields.Datetime(string='Siguiente fecha de ejecucción', default=datetime.datetime.now().replace(hour=1, minute=0, second=0, microsecond=0))
 
     @api.onchange('interval', 'next_date')
     def trm_configuration(self):
