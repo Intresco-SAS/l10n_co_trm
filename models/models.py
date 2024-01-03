@@ -37,16 +37,14 @@ class AccountTRM(models.Model):
             json_data[variable] = eval(variable)
         rate = float(value)
 
-        existing_rate = self.env['res.currency.rate'].search([('name', '=', date_trm)], limit=1)
-
         cambio = 1 / rate
 
+        existing_rate = self.env['res.currency.rate'].search([('name', '=', date_trm)], limit=1)
+
         if existing_rate:
-            existing_rate.write({'rate': float(value)})
-            existing_rate.unlink()
-            self.env['res.currency.rate'].create({'name': date_trm, 'cambio': float(value), 'currency_id': 2})
+            existing_rate.write({'rate': float(cambio)})
         else:
-            self.env['res.currency.rate'].create({'name': date_trm, 'cambio': float(value), 'currency_id': 2})    
+            self.env['res.currency.rate'].create({'name': date_trm, 'rate': float(cambio), 'currency_id': 2})
 
    
 class TRMConfiguration(models.TransientModel):
