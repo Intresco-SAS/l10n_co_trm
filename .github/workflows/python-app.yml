@@ -3,10 +3,10 @@ name: CI/CD for Odoo
 on:
   push:
     branches:
-      - main
+      - 14.0
   pull_request:
     branches:
-      - main
+      - 14.0
 
 jobs:
   build-and-deploy:
