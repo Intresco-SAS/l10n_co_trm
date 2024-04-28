@@ -92,7 +92,7 @@ RUN chown odoo /etc/odoo/odoo.conf \
 # Expose Odoo services
 EXPOSE 8069 8071 8072
 
-# Set the default config file
+# Set the default config file.
 ENV ODOO_RC /etc/odoo/odoo.conf
 
 # Set default user when running the container
