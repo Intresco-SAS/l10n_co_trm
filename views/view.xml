@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="trmc_inherit_res_currency" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.trmc</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='update_exchange_rates']" position="replace" >
+                    <div class="col-12 col-lg-6 o_setting_box" >
+                        <div class="o_setting_left_pane">
+                            <field name="update_trm" string="Tasas de Cambio Automáticas" class="o_checkbox"/>
+                        </div>
+                        <div class="o_setting_right_pane"> 
+                            <label for="update_trm" style="font-weight: bold;" />
+                            <div class="text-muted" >
+                                Actualizar las tasas de cambio automáticamente
+                            </div>
+                        
+                            <div class="content-group"  attrs="{'invisible': [('update_trm', '=', False)]}">
+                                <div class="row mt16">
+                                    <label for="service" class="col-lg-3 o_light_label"/>
+                                    <field name="service"/>
+                                </div>
+                            </div>
+                            <div class="content-group"  attrs="{'invisible': [('update_trm', '=', False)]}">
+                                <div class="row mt16">
+                                    <label for="interval" class="col-lg-3 o_light_label"/>
+                                    <field name="interval"/>
+                                </div>
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('update_trm', '=', False)]}">
+                                <div class="row mt16">
+                                    <label for="next_date" class="col-lg-3 o_light_label"/>
+                                    <field name="next_date"/>
+                                </div>
+                            </div>  
+                        </div>                         
+                    </div>                     
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
